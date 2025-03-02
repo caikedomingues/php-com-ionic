@@ -2,4 +2,4 @@ RewriteEngine on
 
 RewriteRule ^clientes/?$ api.php
 
-RewriteRule ^cliente/([0-9]+)?$ api.php?id=$1
+RewriteRule ^clientes/([0-9]+)?$ api.php?id=$1

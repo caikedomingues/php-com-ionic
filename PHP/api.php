@@ -53,7 +53,7 @@
     # como argumento informações do banco de dados. Essas informações
     # são: endereço do servidor, o usuário(quem administra o
     # banco de dados), a senha e o nome do banco de dados.  
-    $con = new mysqli('localhost', 'root', '', 'phpionic')
+    $con = new mysqli('localhost', 'root', '', 'phpionic');
 
     # GET: As requisições GET são um dos métodos de requisição HTTP 
     # utilizados na comunicação entre um cliente (como um navegador
@@ -115,5 +115,56 @@
 
         # json_encode($data): Converte o array $data em uma String JSON.
         exit(json_encode($data));
+    }
+
+
+    # PUT: É usado para solicitar atualizações de registros no servidor.
+    # Observação se o recurso não existir no URI especificado, o put
+    # pode criar um novo recurso. 
+
+    # Este bloco verifica se a requisição HTTP é do tipo PUT. Se for,
+    # ele tenta atualizar o um registro na tabela "clientes" do banco de
+    # dados com base no 'id' fornecido na URL. Os dados para atualização
+    # são recebidos no corpo da requisição como JSON.
+
+    # $_SERVER["REQUEST_METHOD"] == 'PUT': Esta linha verifica se o 
+    # método da requisição HTTP é um PUT. Se a requisição for PUT,
+    # o código dentro do bloco if será executado.
+    if($_SERVER["REQUEST_METHOD"] == 'PUT'){
+
+        # Essa parte verifica se o id foi passado na requisição HTTP
+        # PUT
+        if(isset($_GET['id'])){
+
+            # Se o id estiver presente ele será armazenado na
+            # variável 'id'.
+            $id = $_GET['id'];
+
+            # json_decode: Decodifica a string JSON recebida no corpo
+            # da requisição em um objeto PHP. O resultado é armazenado
+            # na variável data.
+            
+            # file_get_contents("php://input"): Lê o conteúdo do corpo
+            # da requisição HTTP. Em requisições PUT, os dados geralmente
+            # são enviados no corpo da requisição.
+
+            $data = json_decode(file_get_contents("php://input"));
+
+            # Comando sql que atualiza o registro do id especificado na URL
+            $sql = $con->query("UPDATE clientes set nome = '".$data->nome."', cidade = '".$data->cidade."', email = '".$data->email."' WHERE id='$id'");
+
+            if($sql){
+
+                # Se o comando for executado, vamos imprimir essa 
+                # mensagem
+                exit(json_encode(array('Status' => 'Sucesso')));
+
+            }else{
+
+                # Se a atualização do registro falhar, vamos imprimir
+                # essa mensagem.
+                exit(json_encode(array('Status' => 'Não Funcionou')));
+            }
+        }
     }
  ?>
