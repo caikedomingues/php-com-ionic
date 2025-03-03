@@ -167,4 +167,79 @@
             }
         }
     }
+
+    # POST: Serve para o cliente inserir novos dados no servidor
+
+    # Ira verificar se a requisição HTTP do cliente para o servidor
+    # é do tipo POST. Para isso usaremos o método 'METHOD_REQUEST'
+    # da super global SERVER que tem como objetivo mostrar o tipo
+    # de requisição que o cliente fez para o servidor.
+    if($_SERVER['REQUEST_METHOD'] == 'POST'){
+
+        # Esta linha obtém os dados enviados no corpo da requisição
+    
+        # file_get_contents("php://input"): Lê o conteúdo bruto da
+        # requisição, que neste caso, espera-se que seja um objeto
+        # JSON.
+
+        # json_decode: Converte a String JSON em um objeto PHP,
+        # facilitando o acesso aos dados.
+        $data = json_decode(file_get_contents("php://input"));
+
+        # Comando sql que adiciona novos registros no banco de dados.
+        $sql = $con->query("INSERT INTO clientes(nome, email, cidade) VALUES('".$data->nome."', '".$data->cidade."', '".$data->email."')");
+
+        # Irá verificar se a inserção dos dados foi realizada com sucesso.
+        if($sql){
+            
+            # Irá obter o id do último registro inserido. Esse id é adicionado ao objeto data
+            $data->id = $con->insert_id;
+
+            # json_encode($data): Converte o objeto $data de volta para
+            # JSON e o envia como resposta.
+            # exit: Encerra a execução do script.
+            exit(json_encode($data));
+
+        }else{
+
+            # Se não funcionar, o json irá mostrar essa mensagem
+            exit(json_decode(array('Status' => 'Não funcionou')));
+        }
+    }
+
+
+    # Delete: Método de requisição que apaga os dados do servidor.
+
+    # Irá verificar se a requisição do cliente é do tipo 'Delete'.
+    # Para isso, vamos usar o método REQUEST_METHOD da superglobal
+    # SERVER.
+    if($_SERVER['REQUEST_METHOD'] == 'DELETE'){
+
+        # Verificando se o id foi passado na URL HTTP
+        if(isset($_GET['id'])){
+
+            # Irá atribuir o id da URL na variável.
+            $id = $_GET['id'];
+
+            # Comando sql que irá excluir registros do banco de dados
+            # de acordo com  o id passado na url
+            $sql = $con->query("DELETE FROM clientes WHERE id='$id'");
+
+            # Irá verificar se o comando foi executado com sucesso.
+            if($sql){   
+
+                # Se a execução do comando for realizada com sucesso 
+                # o json irá imprimir essa mensagem.
+                exit(json_encode(array('Status' => 'Funcionou')));
+
+            }else{
+
+                # Se a execução do comando falhar, o json irá imprimir
+                # essa mensagem.
+                exit(json_decode(array('Status' => 'Não Funcionou')));
+            }
+        }
+    }
+
+
  ?>
