@@ -235,11 +235,11 @@
             }else{
 
                 # Se a execução do comando falhar, o json irá imprimir
-                # essa mensagem.
+                # essa mensagem. 
                 exit(json_decode(array('Status' => 'Não Funcionou')));
             }
         }
     }
 
 
- ?>
+ ?> 
