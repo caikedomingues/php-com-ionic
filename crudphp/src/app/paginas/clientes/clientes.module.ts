@@ -13,8 +13,9 @@ import { ClientesPage } from './clientes.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    ClientesPageRoutingModule
+    ClientesPageRoutingModule,
+    ClientesPage
   ],
-  declarations: [ClientesPage]
+  declarations: []
 })
 export class ClientesPageModule {}
