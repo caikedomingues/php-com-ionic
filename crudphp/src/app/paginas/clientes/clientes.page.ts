@@ -18,6 +18,25 @@ import { IonicModule } from '@ionic/angular';
 arquivo chamado clientes.serivce.ts localizado na pasta src/app/servico */
 import { Clientes, ClientesService } from 'src/app/servico/clientes.service';
 
+/*Importa o módulo CommonModule do pacote @angular/common no Angular.
+  O commonModule fornece um conjunto de diretivas, pipes e outros 
+  recursos essenciais que são usados em quase todos os aplicativos
+  Angular. Aqui estão alguns dos recursos mais usados que ele fornece:
+
+  *ngIf: Adiciona ou remove um elemento DOM com base em uma condição
+  
+  *ngFor: Itera sobre uma lista e renderiza um modelo para cada item.
+
+  *ngSwitch: Permite alternar entre vários modelos com base em um valor
+
+  DatePipe: Formata datas.
+
+  CurrencyPipe: Formata valores de moeda.
+
+  UpperCasePipe: Transforma texto em maiúsculas.
+
+  LowerCasePipe: Transforma texto em minúsculas.
+*/
 import { CommonModule } from '@angular/common'; 
 
 /*@Component: Este decorador define o componente Angular. Ele recebe um objeto de metadados com as segunites propriedades:
@@ -34,7 +53,10 @@ CSS do componente.
 standalone: true: Indica que este é um componente standalone. Componentes
 standalone não precisam ser declarados no template do componente.
 
-imports: [IonicModule]: Importa o módulo IonicModule para que os componentes do Ionic possam ser usados no template do componente.
+imports: [IonicModule]: Importa o módulo IonicModule para que os 
+componentes do Ionic possam ser usados no template do componente.
+
+imports: [CommonModule]: Permite que você use diretivas e pipes comuns do Angular, que são essenciais para a lógica do template
 */
 @Component({
   selector: 'app-clientes',
@@ -76,6 +98,30 @@ clientes: Clientes[] = [];
     })
     
     
+  }
+
+  /*Função que irá remover registros do banco de dados do
+  aplicativo  */
+
+  /*A função ira receber um id do tipo any (que aceita qualquer tipo de
+  de dado) */
+  remover(id: any){
+    
+    /*Irá chamar o método remove da classe ClienteServices passando
+    o id como parâmetro. O método remove faz requisições DELETE ao 
+    servidor para excluir clientes. O subscribe é usado para inscrever
+    no Observable e executar um código quando a requisição for concluida. O código dentro do subscribe() será executado quando a
+    exclusão do cliente for bem-sucedida.*/
+    this.services.remove(id).subscribe(()=>{
+    
+    /*Vamos repetir esse processo com o objetivo de mostrar a lista
+    atualizada de clientes */
+    this.services.getAll().subscribe(response => {
+
+        this.clientes = response;
+    })
+
+    } )
   }
 
 }

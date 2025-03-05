@@ -1,16 +1,22 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="primary">
-    <ion-title>clientes</ion-title>
+      <ion-title>clientes</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-list>
-    <ion-item *ngFor="let c of clientes">{{c.nome}}</ion-item>
+      <ion-item-sliding *ngFor="let c of clientes">
+          <ion-item>
+              {{ c.nome }}
+          </ion-item>
+          <ion-item-options side="end">
+              <ion-item-option color="danger" (click)="remover(c.id)">Delete</ion-item-option>
+          </ion-item-options>
+      </ion-item-sliding>
   </ion-list>
   <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">clientes</ion-title>
-    </ion-toolbar>
+      <ion-toolbar>
+          <ion-title size="large">clientes</ion-title>
+      </ion-toolbar>
   </ion-header>
-</ion-content>

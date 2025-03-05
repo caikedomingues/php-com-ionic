@@ -58,4 +58,24 @@ export class ClientesService {
     a requisição é bem-sucedida.*/
     return this.http.get<[Clientes]>(this.url);
   }
+
+  /*Método que irá realizar requisições do tipo DELETE para apagar
+  dados do servidor. */
+
+  /*id: any: Declara que a função recebe um parâmetro chamado id de tipo
+  any. O tipo any significa que o parâmetro pode ser de qualquer tipo
+  (número, string, objeto, etc) */
+  remove(id: any){
+
+    /*This.http refere-se a uma instância de serviço HttpClient do Angular, que é usado para fazer requisições Http.
+  
+    this.http.delete() é usado para fazer uma requisição Http DELETE. 
+    As requisições DELETE são tipicamente utilizadas para remover 
+    recursos do servidor.
+
+    this.url + '/' + id constrói a URL completa para a requisição DELETE.
+    */
+    return this.http.delete(this.url + '/' + id);
+
+  }
 }
