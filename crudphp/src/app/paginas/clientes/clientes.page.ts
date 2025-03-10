@@ -12,7 +12,7 @@ import { Component, OnInit } from '@angular/core';
 /*Importa o módulo IonicModule do Ionic Framework. Este módulo
 fornece os componentes, diretivas e serviços necessários para
 construir interfaces de usuário com o ionic. */
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, ModalController } from '@ionic/angular';
 
 /*Importa a interface Clientes e o serviço ClientesService de um
 arquivo chamado clientes.serivce.ts localizado na pasta src/app/servico */
@@ -38,6 +38,7 @@ import { Clientes, ClientesService } from 'src/app/servico/clientes.service';
   LowerCasePipe: Transforma texto em minúsculas.
 */
 import { CommonModule } from '@angular/common'; 
+import { ModalclientePage } from '../modalcliente/modalcliente.page';
 
 /*@Component: Este decorador define o componente Angular. Ele recebe um objeto de metadados com as segunites propriedades:
 
@@ -79,7 +80,7 @@ clientes: Clientes[] = [];
 
   /*Define o construtor da classe. Ele recebe o serviço ClienteService
   como um parâmetro e o atribui a uma propriedade privada chamada services. */
-  constructor(private services: ClientesService) { }
+  constructor(private services: ClientesService, private modalCtrl:ModalController) { }
 
   /*Este método é executado quando o componente é inicializado. */
   ngOnInit() {
@@ -122,6 +123,40 @@ clientes: Clientes[] = [];
     })
 
     } )
+  }
+  
+  /*Essa função é responsável por criar e exibir um modal (ModalclientePage) e manipular os dados retornados quando
+  o modal é descartado */
+  novoCliente(){
+
+    /*Irá criar o modal */
+    this.modalCtrl.create({
+
+      /*Especifica qual componente Angular será exibido
+      dentro do modal. */
+      component: ModalclientePage
+
+      /*Esse .then() é executado quando o modal é criado
+      com sucesso. */
+    }).then( modal => {
+
+      /*Exibe o modal na tela */
+      modal.present();
+      
+      /*Retorna um promise que é resolvida quando o modal é fechado
+      (descartado). Essa promise contém os dados que foram passados do modal de volta para o componente pai. */
+      return modal.onDidDismiss();
+
+      /*Esse .then() é executado quando o modal é fechado e a promise
+      de OnDidDismiss() é resolvida. O data desestrutura o objeto 
+      retornado para obter a propriedade data. Essa propriedade 
+      contém os dados que foram passados do modal de volta para
+      o componente pai. */
+    }).then(({data}) =>{
+
+        /*Exibe os dados no console do navegador. Isso permite que o desenvolvedor veja quais dados foram retornados pelo modal. */
+        console.log(data);
+    });
   }
 
 }

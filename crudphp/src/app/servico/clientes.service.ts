@@ -76,6 +76,18 @@ export class ClientesService {
     this.url + '/' + id constrói a URL completa para a requisição DELETE.
     */
     return this.http.delete(this.url + '/' + id);
-
   }
+
+  /*Srrviço que irá lidar com a criação de novos 
+  clientes. A função irá receber um único parâmetro chamado
+  cliente. O tipo de cliente é a classe Clientes definida anteriormente
+  */
+  create(cliente: Clientes){
+
+    /* Usa o http serviço para fazer uma requisição POST para uma URL
+    especificada pelo this.url. O cliente objeto é passado como corpo 
+    para solicitação. */
+    return this.http.post(this.url, cliente)
+  }
+
 }
