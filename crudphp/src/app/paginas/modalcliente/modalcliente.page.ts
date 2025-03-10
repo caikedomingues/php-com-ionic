@@ -7,7 +7,7 @@
 /*Importa as classes Component e OnInit do Angular core. Component
 é usado para definir um componente Angular e OnInit é um ciclo de
 vida do componente que é executado após a inicialização do componente.*/
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 /*Importa o módulo IonicModule e a classe ModalController do Ionic
 Angular. IonicModule fornece os componentes e diretivas do Ionic
@@ -21,7 +21,7 @@ FormsModule fornece as diretivas e serviços necessários para
 trabalhar com formulários no Angular, e NgForm representa um 
 formulário no template. */
 import { FormsModule, NgForm} from '@angular/forms';
-import { ClientesService } from 'src/app/servico/clientes.service';
+import { Clientes, ClientesService } from 'src/app/servico/clientes.service';
 
 
 
@@ -54,6 +54,26 @@ a interface OnInit. Isso significa que esta classe deve ter um
 método ngOnInit(). */
 export class ModalclientePage implements OnInit {
 
+  /*Input: Este é um decorador do Angular. Decoradores são funções
+  que modificam classes, propriedades ou métodos.
+  
+  c: Este é o nome da propriedade que está sendo decorada. É o nome
+  que será usado no template do componente pai para passar dados
+  para este componente filho.
+
+  Clientes | undefined: Esta parte define o tipo da propriedade
+  c. 
+
+  Clientes: é uma interface que define a estrutura de dados de um
+  cliente. Isso significa que a variável "c" pode receber um objeto do tipo cliente.
+
+  | undefined: O operador | significa "ou". Portanto Clientes | undefined
+  significa que a propriedade c pode ser do tipo Clientes ou undefined
+  (indefinida). Isso é útil para lidar com casos em que o componente filho pode ser renderizado antes que os dados do cliente estejam
+  disponiveis.
+  */
+  @Input() c: Clientes | undefined;
+
   /*O construtor da classe recebe o ModalController como um parâmetro
   e o atribui a uma propriedade privada modalCtrl. Isso permite que
   o componente use o ModalController para fechar o modal. */
@@ -62,6 +82,14 @@ export class ModalclientePage implements OnInit {
   /*Este método é chamado após a inicialização do componente. Podemos
   adicionar aqui um código para executar alguma lógica de inicialização */
   ngOnInit() {
+
+
+    console.log("Entrou no atualizar");
+    
+    /*Exibe no console as propriedades da variável c. */
+    console.log(this.c);
+
+   
   }
 
 

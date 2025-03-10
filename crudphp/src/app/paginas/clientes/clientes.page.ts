@@ -159,4 +159,61 @@ clientes: Clientes[] = [];
     });
   }
 
+
+  /*Função que tem como objetivo atualizar o cadastro de clientes
+  no sistema. Ela recebe um objeto c do tipo Clientes como argumento
+  que representa o cliente a ser atualizado*/
+  atualizar(c:Clientes){
+
+      /*Esta linha cria um modal usando o ModalController
+      do Ionic. */
+      this.modalCtrl.create({
+
+        /*Especifica a que o modal exibirá o componente
+        ModalClientePage. */
+        component: ModalclientePage,
+
+        /*Ela passa o objeto c (o cliente a ser atualizado)
+        como propriedades para o componente ModalClientePage.
+        Isso permite que o modal exiba e edite os dados do
+        cliente. */
+        componentProps: (c)
+
+        /*Esse .then() é executado quando o modal é criado com sucesso.  */
+      }).then(modal => {
+
+        /*Exibe o modal na tela */
+        modal.present();
+
+        /*Retorna uma promise que é resolvida quando o modal é fechado.
+         Essa promise contém os dados que foram passados do modal de volta para o componente pai.*/
+        return modal.onDidDismiss();
+
+        /*Esse then é executado quando o modal é fechado e a promise
+        de onDidDismiss é resolvida. O data desestrutura o objeto
+        retornado pela promise para obter a propriedade data. Essa
+        propriedade data contém os dados que foram passados do modal
+        de volta para o componente pai. */
+      }).then(({data}) =>{
+
+        /*Esta parte do código é executada após o modal ser fechado. 
+        Isso chama o método getAll de um serviço chamado services.
+        Este serviço faz uma requisição para buscar
+        todos os clientes do banco de dados.
+        O subscribe se inscreve na resposta da requisição. Quando
+        a resposta é recebida, a função de callback é executada.*/
+        this.services.getAll().subscribe(response => {
+
+          /*Esta linha atualiza a propriedade this.cliente do componente
+          com os dados recebidos do banco de dados. Isso garante que 
+          a lista de clientes exibida na tela seja atualizada após a 
+          atualização de um cliente no modal. */
+          this.clientes = response;
+        })
+
+      })
+
+
+  }
+
 }

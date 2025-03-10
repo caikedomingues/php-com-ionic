@@ -90,4 +90,40 @@ export class ClientesService {
     return this.http.post(this.url, cliente)
   }
 
+  
+  /*Função que irá lidar com a atualização de clientes usando requisição
+  HTTP put. Ela recebe 2 argumentos:
+  
+  cliente: clientes: Um objeto do tipo Clientes que contém os dados
+  atualizados do cliente.
+  
+  id: any: O id do cliente que precisa ser atualizado. O tipo any indica
+  que o ID pode ser de qualquer tipo (geralmente um número ou string).
+  */
+  update(cliente: Clientes, id:any){
+
+
+      /*Esta linha realiza a requisição HTTP put para atualizar o cliente
+      no banco de dados.
+      
+      this.http: é uma instância do HttpClient do Angular, que é usado
+      para fazer requisições HTTP.
+      
+      put: O método put do HttpClient é usado para enviar a requisição
+      HTTP put ao servidor. Ela recebe 2 argumentos:
+      
+      url: A URL para a qual a requisição será enviada.
+
+      body (cliente): Os dados que serão enviados no corpo
+      da requisição.
+      */
+
+      /*this.url + '/' + id: Esta parte constrói a URL completa para a requisição adicionando o id e os dados do cliente. O id indica
+      qual registro deve ter os dados atualizados e o cliente possui
+      os dados atualizados */
+      this.http.put(this.url +'/' + id, cliente);
+
+
+  }
+
 }
