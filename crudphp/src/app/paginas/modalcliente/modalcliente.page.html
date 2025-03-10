@@ -3,7 +3,7 @@
   <ion-toolbar color="primary">
       
       <ion-button slot="end" (click) = "fecharModal()">Fechar</ion-button>
-      <ion-title>Novo Cliente</ion-title>
+      <ion-title>{{atualizar ? 'Atualizar Cliente' : 'Novo Cliente'}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -25,7 +25,7 @@
         <ion-input [(ngModel)] = "dados.email" name="email"></ion-input>
       </ion-item>
 
-      <ion-button fill="outline" expand="block" type="submit">Cadastrar</ion-button>
+      <ion-button fill="outline" expand="block" type="submit">{{atualizar ? 'Atualizar Cliente': 'Novo Cliente'}}</ion-button>
     </form>
 
 </ion-content>
