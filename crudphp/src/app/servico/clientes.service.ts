@@ -16,6 +16,7 @@ import { HttpClient } from '@angular/common/http';
 /*Importa o decorador Injectable, usado para marcar uma classe como
 um serviço injetável do Angular */
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 /*Define uma interface chamada Clientes que especifica a estrutura dos
 dados dos clientes. Cada cliente terá as propriedades (colunas
@@ -24,10 +25,10 @@ Essa interface ajuda a manter a consistência dos dados e facilita a
 tipagem do código. */
 export interface Clientes{
 
-  id: String;
-  nome:String;
-  cidade: String;
-  email: String;
+  id: string;
+  nome:string;
+  cidade: string;
+  email: string;
 }
 
 /*Decora a classe ClientesService como um serviço injetável. */
@@ -100,7 +101,7 @@ export class ClientesService {
   id: any: O id do cliente que precisa ser atualizado. O tipo any indica
   que o ID pode ser de qualquer tipo (geralmente um número ou string).
   */
-  update(cliente: Clientes, id:any){
+  update(cliente: Clientes, id:any): Observable<any>{
 
 
       /*Esta linha realiza a requisição HTTP put para atualizar o cliente
@@ -121,7 +122,7 @@ export class ClientesService {
       /*this.url + '/' + id: Esta parte constrói a URL completa para a requisição adicionando o id e os dados do cliente. O id indica
       qual registro deve ter os dados atualizados e o cliente possui
       os dados atualizados */
-      this.http.put(this.url +'/' + id, cliente);
+      return this.http.put(this.url + '/' + id, cliente);
 
 
   }

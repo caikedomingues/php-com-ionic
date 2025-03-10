@@ -74,6 +74,17 @@ export class ModalclientePage implements OnInit {
   */
   @Input() c: Clientes | undefined;
 
+  atualizar = false;
+
+  dados = {
+
+    nome: '',
+    cidade: '',
+    email: ''
+
+  }
+
+
   /*O construtor da classe recebe o ModalController como um parâmetro
   e o atribui a uma propriedade privada modalCtrl. Isso permite que
   o componente use o ModalController para fechar o modal. */
@@ -83,11 +94,24 @@ export class ModalclientePage implements OnInit {
   adicionar aqui um código para executar alguma lógica de inicialização */
   ngOnInit() {
 
+    /*Aqui vamos verificar se a propriedade c recebeu os
+    valores da interface clientes */
+    if(this.c){
 
-    console.log("Entrou no atualizar");
-    
-    /*Exibe no console as propriedades da variável c. */
-    console.log(this.c);
+      /*SE a propriedade tiver os valores do tipo Clientes,
+      vamos imprimir no console "Atualizar" */
+      //console.log("Atualizar");
+
+      this.atualizar = true;
+
+      this.dados = this.c;
+
+      console.log(this.c);
+
+    }else{
+
+        console.log("Não recebeu os valores");
+    }
 
    
   }
@@ -110,16 +134,43 @@ export class ModalclientePage implements OnInit {
     ngModel no template HTML. */
       const cliente = form.value;
 
-      /*Chama o um método create de um serviço chamado services (classe ClientesService). Este serviço é responsável por enviar os dados do cliente para um banco de dados. O método create recebe o objeto cliente como argumento, que contém os dados do formulário.
-      O subscribe é usado para lidar com a resposta assincrona do 
-      método create. A função callback response é executada quando
-      o Observable emite um valor, ou seja, quando a resposta do servidor é recebida.
-      O modalCtrl dentro da função callback fecha o modal após a
-      resposta do servidor ser recebida. Isso indica que o cadastro
-      do cliente foi bem-sucedido.*/
-      this.services.create(cliente).subscribe(response => {
+      /*Irá verificar se o formulário está sendo utilizado para atualizar um cliente existente. */
+      if(this.atualizar){
 
-        this.modalCtrl.dismiss(response);
-      })
+        /*Se this.atualizar for verdadeiro, esta linha chama o metodo
+        update do serviço this.services, passando o objeto cliente com
+        os dados atualizados e o id do cliente a ser atualizado.
+        
+        this.c?.id: Usa o operador encadeamento opcional(?.) para acessar
+        a propriedade id de this.c. Se this.c for undefined, this.c?.id
+        será undefined.
+
+        subscribe subscribe(response =>{
+
+          this.modalCtrl.dismiss(response): Se inscreve no Observable retornado por this.service.update. Quando a requisição é bem sucedida, a função callback é
+        executada, e o modal é fechado com a resposta do servidor
+        */
+        this.services.update(cliente, this.c?.id).subscribe(response =>{
+
+          this.modalCtrl.dismiss(response);
+        })
+        
+        
+      }else{
+
+        /*Chama o um método create de um serviço chamado services (classe ClientesService). Este serviço é responsável por enviar os dados do cliente para um banco de dados. O método create recebe o objeto cliente como argumento, que contém os dados do formulário.
+        O subscribe é usado para lidar com a resposta assincrona do 
+        método create. A função callback response é executada quando
+        o Observable emite um valor, ou seja, quando a resposta do servidor é recebida.
+        O modalCtrl dentro da função callback fecha o modal após a
+        resposta do servidor ser recebida. Isso indica que o cadastro
+        do cliente foi bem-sucedido.*/
+        this.services.create(cliente).subscribe(response => {
+
+          this.modalCtrl.dismiss(response);
+          
+        })
+      }
+      
   }
 }

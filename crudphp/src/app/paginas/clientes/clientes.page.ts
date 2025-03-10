@@ -177,7 +177,7 @@ clientes: Clientes[] = [];
         como propriedades para o componente ModalClientePage.
         Isso permite que o modal exiba e edite os dados do
         cliente. */
-        componentProps: (c)
+        componentProps: {c:c}
 
         /*Esse .then() é executado quando o modal é criado com sucesso.  */
       }).then(modal => {
