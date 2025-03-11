@@ -50,7 +50,7 @@ export class ClientesService {
 
   /*Define um método chamado getAll() que faz uma requisição GET para a 
   API na URL especificada */
-  getAll(){
+  getAll(): Observable<any>{
 
     /*Usa o HttpClient para fazer uma requisição GET para a URL 
     armazenada na propriedade url. <[Clientes]> indica que o método

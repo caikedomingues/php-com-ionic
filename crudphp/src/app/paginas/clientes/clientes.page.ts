@@ -12,7 +12,7 @@ import { Component, OnInit } from '@angular/core';
 /*Importa o módulo IonicModule do Ionic Framework. Este módulo
 fornece os componentes, diretivas e serviços necessários para
 construir interfaces de usuário com o ionic. */
-import { IonicModule, ModalController } from '@ionic/angular';
+import { IonicModule, ModalController, ToastController } from '@ionic/angular';
 
 /*Importa a interface Clientes e o serviço ClientesService de um
 arquivo chamado clientes.serivce.ts localizado na pasta src/app/servico */
@@ -80,7 +80,7 @@ clientes: Clientes[] = [];
 
   /*Define o construtor da classe. Ele recebe o serviço ClienteService
   como um parâmetro e o atribui a uma propriedade privada chamada services. */
-  constructor(private services: ClientesService, private modalCtrl:ModalController) { }
+  constructor(private services: ClientesService, private modalCtrl:ModalController, private toastCrtl: ToastController) { }
 
   /*Este método é executado quando o componente é inicializado. */
   ngOnInit() {
@@ -120,7 +120,24 @@ clientes: Clientes[] = [];
     this.services.getAll().subscribe(response => {
 
         this.clientes = response;
-    })
+    });
+
+    /*Esta linha usa o ToastController (injetado no
+        componente) para criar um toast (uma pequena mensagem temporária) */
+        this.toastCrtl.create({
+
+          /*Define a mensagem exibida no toast */
+          message: 'Usuário excluido com sucesso',
+
+          /*Define a duração do toast em 2 milissegundos (2 segundos) */
+          duration: 2000
+
+          /*é usado para executar uma função após a criação do toast. */
+        }).then(toast =>{
+          
+            /*Exibe o toast na tela. */
+            toast.present();
+        })
 
     } )
   }
@@ -156,6 +173,45 @@ clientes: Clientes[] = [];
 
         /*Exibe os dados no console do navegador. Isso permite que o desenvolvedor veja quais dados foram retornados pelo modal. */
         console.log(data);
+
+        /*Esta linha chama o método getAll() de um serviço. Este
+        método retorna um Observable, que é a forma de lidar com
+        dados assincronos no Angular. O método subscribe é usado 
+        para se inscrever no Observable. Quando o serviço retorna
+        os dados, a função dentro do subscribe é executada.
+        
+        response: Esta é uma função callback que recebe a resposta
+        do serviço. Nesse caso, a resposta é atribuida á propriedade
+        this.clientes do componente. Ou seja, ele está atualizando a
+        lista de clientes exibida na interface do usuário.
+        */
+        this.services.getAll().subscribe(response => {
+
+          /*Aqui, a resposta do servidor, que presumivelmente é um
+          array de clientes, é atribuida á propriedade clientes do
+          componente. Isso atualiza a lista de clientes exibida na
+          interface do usuário. */
+         this.clientes = response;
+
+        });
+
+        /*Esta linha usa o ToastController (injetado no
+        componente) para criar um toast (uma pequena mensagem temporária) */
+        this.toastCrtl.create({
+
+          /*Define a mensagem exibida no toast */
+          message: 'Usuário cadastrado com sucesso',
+
+          /*Define a duração do toast em 2 milissegundos (2 segundos) */
+          duration: 2000
+
+          /*é usado para executar uma função após a criação do toast. */
+        }).then(toast =>{
+          
+            /*Exibe o toast na tela. */
+            toast.present();
+        })
+        
     });
   }
 
@@ -209,6 +265,23 @@ clientes: Clientes[] = [];
           a lista de clientes exibida na tela seja atualizada após a 
           atualização de um cliente no modal. */
           this.clientes = response;
+        });
+
+        /*Esta linha usa o ToastController (injetado no
+        componente) para criar um toast (uma pequena mensagem temporária) */
+        this.toastCrtl.create({
+
+          /*Define a mensagem exibida no toast */
+          message: 'Usuário atualzado com sucesso',
+
+          /*Define a duração do toast em 2 milissegundos (2 segundos) */
+          duration: 2000
+
+          /*é usado para executar uma função após a criação do toast. */
+        }).then(toast =>{
+          
+            /*Exibe o toast na tela. */
+            toast.present();
         })
 
       })
